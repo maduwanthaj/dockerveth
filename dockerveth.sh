@@ -41,7 +41,7 @@ while read -r container_id container_name; do
     || log_error "Could not fetch PID for container ID: ${container_id} NAME: ${container_name}."
 
     # fetch the link index for the container's veth interface
-    link_index=$(nsenter -t "${pid}" -n ip -json link show type veth | jq '.[0].link_index // empty') \
+    link_index=$(nsenter -t "${pid}" -n ip -json link show type veth | jq '.[0].link_index // 0') \
     || log_error "Could not fetch link index for container ID: ${container_id} NAME: ${container_name}."
 
     # find the veth name using the link index
